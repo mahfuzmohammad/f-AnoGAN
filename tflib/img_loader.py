@@ -49,7 +49,7 @@ def make_generator(data_set, batch_size):
 def load(batch_size):
     return (
         make_generator('train_normal', batch_size),
-        make_generator('test_normal', batch_size)
+        make_generator('test_normal', batch_size),
         make_generator('test_anom', batch_size)
     )
 

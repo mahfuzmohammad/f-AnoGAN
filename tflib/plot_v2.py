@@ -1,3 +1,4 @@
+import os
 import numpy as np
 
 import matplotlib
@@ -12,13 +13,14 @@ _since_beginning = collections.defaultdict(lambda: {})
 _since_last_flush = collections.defaultdict(lambda: {})
 
 _iter = [0]
-def tick():
-	_iter[0] += 1
+def tick(iteration):
+	# _iter[0] += 1
+	_iter[0] = iteration
 
 def plot(name, value):
 	_since_last_flush[name][_iter[0]] = value
 
-def flush():
+def flush(log_dir):
 	prints = []
 
 	for name, vals in _since_last_flush.items():
@@ -37,5 +39,5 @@ def flush():
 	print "iter {}\t{}".format(_iter[0], "\t".join(prints))
 	_since_last_flush.clear()
 
-	with open('log.pkl', 'wb') as f:
+	with open(os.path.join(log_dir, 'log.pkl'), 'wb') as f:
 		pickle.dump(dict(_since_beginning), f, pickle.HIGHEST_PROTOCOL)
